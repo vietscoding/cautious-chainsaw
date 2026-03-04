@@ -31,6 +31,6 @@ function ForgotPasswordForm(props) {
             </p>
         </div>
     );
-}
+} 
 
 export default ForgotPasswordForm;
