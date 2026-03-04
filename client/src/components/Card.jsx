@@ -1,7 +1,7 @@
-import decadePic from './assets/decade.jpg'
+import decadePic from '../assets/decade.jpg'
 
 function Card() {
-    return(
+    return (
         <div className="card">
             <img id="card" src={decadePic} alt="profile picture" ></img>
             <h2>Name</h2>
@@ -10,4 +10,4 @@ function Card() {
     );
 }
 
-export default Card
+export default Card;
