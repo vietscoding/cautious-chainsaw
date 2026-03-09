@@ -33,6 +33,7 @@ export const students = async (req, res) => { // Khai báo controller
 
 }
 
+
 export const register = async (req, res) => {
 	const { email, password, confirmPassword } = req.body;
 
@@ -52,12 +53,13 @@ export const register = async (req, res) => {
 
 
 	createUser({
-		id: 1,
 		email,
 		password: hashed,
 	});
 
-	res.json({ message: "Registered" });
+	res.json({
+		message: "Registered"
+	});
 };
 
 export const login = async (req, res) => {

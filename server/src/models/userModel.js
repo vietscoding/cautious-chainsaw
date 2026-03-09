@@ -21,5 +21,16 @@ export const findTranscriptByStudentId = (studentId) =>
 export const findUserByEmail = (email) => users.find((u) => u.email === email);
 
 export const createUser = (user) => {
-    users.push(user);
+    const newId = users.length + 1;
+
+    const newUser = {
+        id: newId,
+        ...user
+    };
+
+    users.push(newUser);
+
+    return newUser;
+
+
 };
