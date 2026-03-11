@@ -3,6 +3,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import transcriptRoutes from "./routes/transcriptRoutes.js";
 import dotenv from "dotenv";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
@@ -13,20 +14,16 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/transcript", transcriptRoutes)
+app.use("/api/transcript", transcriptRoutes);
 
-// app.use((req, res, next) => {
+const loginLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 5,
+    message: "Too many login attempts"
+});
 
-//     // giả lập user đã login
-//     req.user = {
-//         id: 1,
-//         name: "Alice"
-//     };
-
-
-//     next();
-// });
+app.post("/api/auth/login", loginLimiter, authController);
 
 app.listen(port, () =>
-    console.log(`Server running on port ${port}`)
+    console.log(`Server running on port ${port} at ${new Date().toLocaleString()}`)
 );

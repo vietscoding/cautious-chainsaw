@@ -20,16 +20,16 @@ export const getTranscript = async (req, res) => { // Khai báo controller
             });
         }
 
-        // if (transcript.studentId !== req.user.id) { // check autho against BOLA
-        //     return res.status(403).json({
-        //         message: "Forbidden"
-        //     })
-        // }
+        if (transcript.studentId !== req.user.id) { // check autho against BOLA
+            return res.status(403).json({
+                message: "Forbidden"
+            })
+        }
 
         res.json(transcript);
 
     } catch (error) {
-
+        console.log(error);
         res.status(500).json({
             message: "Server error"
         });

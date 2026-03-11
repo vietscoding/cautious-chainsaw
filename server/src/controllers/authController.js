@@ -30,8 +30,7 @@ export const students = async (req, res) => { // Khai báo controller
 
 	}
 
-
-}
+};
 
 
 export const register = async (req, res) => {
@@ -49,8 +48,6 @@ export const register = async (req, res) => {
 	}
 
 	const hashed = await bcrypt.hash(password, 10); // Hash mật khẩu
-
-
 
 	createUser({
 		email,
