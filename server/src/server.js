@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import transcriptRoutes from "./routes/transcriptRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import dotenv from "dotenv";
 import mysql from "mysql";
 
@@ -36,6 +37,7 @@ db.connect(err => {
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/api5", adminRoutes);
 app.use("/api/api4", studentRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/auth", authRoutes);

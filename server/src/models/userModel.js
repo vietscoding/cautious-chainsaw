@@ -28,6 +28,16 @@ export const findUserByEmail = (email) => users.find((u) => u.email === email);
 export const findUserById = (id) => users.find((u) => u.id === id);
 export const findStudentById = (id) => students.find((s) => s.id === id);
 
+export const getAllUsers = () => users;
+
+export const deleteStudentById = (id) => {
+    const index = students.findIndex((s) => s.id === id);
+    if (index !== -1) {
+        return students.splice(index, 1)[0];
+    }
+    return null;
+};
+
 export const createStudentsBulk = (studentList) => {
     const created = [];
     for (const studentData of studentList) {
@@ -56,7 +66,7 @@ export const createUser = (user) => {
 
     const newUser = {
         id: newId,
-        role: "user", // default role
+        role: user.role || "user", // default role or from input
         ...user
     };
 

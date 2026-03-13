@@ -1,4 +1,4 @@
-import { findStudentById, findUserById, updateUser, createStudentsBulk } from "../models/userModel.js";
+import { findStudentById, findUserById, updateUser, createStudentsBulk, getAllUsers, deleteStudentById } from "../models/userModel.js";
 import bcrypt from "bcrypt";
 
 export const getProfile = async (req, res) => {
@@ -86,16 +86,63 @@ export const bulkCreateStudents = async (req, res) => {
             return res.status(400).json({ message: "Students must be an array" });
         }
 
-        // API4:vul - no limit on bulk creation, allows resource exhaustion
-        const createdStudents = createStudentsBulk(studentList);
-
-        // // API4:fix - limit bulk creation to prevent resource exhaustion
-        // if (studentList.length > 10) {
-        //     return res.status(400).json({ message: "Cannot create more than 10 students at once" });
-        // }
+        // // API4:vul - no limit on bulk creation, allows resource exhaustion
         // const createdStudents = createStudentsBulk(studentList);
 
+        // API4:fix - limit bulk creation to prevent resource exhaustion
+        if (studentList.length > 10) {
+            return res.status(400).json({ message: "Cannot create more than 10 students at once" });
+        }
+        const createdStudents = createStudentsBulk(studentList);
+
         res.json({ message: "Students created", students: createdStudents });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+// API5: Admin functions - should require admin role
+export const getAllUsersAdmin = async (req, res) => {
+    try {
+        // API5:vul - no role check, any authenticated user can access admin function
+        // const allUsers = getAllUsers();
+
+        // API5:fix - check if user has admin role
+        if (req.user.role !== "admin") {
+            return res.status(403).json({ message: "Admin access required" });
+        }
+        const allUsers = getAllUsers();
+
+        // Don't return passwords
+        const usersResponse = allUsers.map(({ password, ...user }) => user);
+        res.json({ users: usersResponse });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+export const deleteStudentAdmin = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // API5:vul - no role check, any authenticated user can delete students
+        const deletedStudent = deleteStudentById(Number(id));
+
+        // // API5:fix - check if user has admin role
+        // if (req.user.role !== "admin") {
+        //     return res.status(403).json({ message: "Admin access required" });
+        // }
+        // const deletedStudent = deleteStudentById(Number(id));
+
+        if (!deletedStudent) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        res.json({ message: "Student deleted", student: deletedStudent });
 
     } catch (error) {
         console.log(error);

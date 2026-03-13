@@ -52,9 +52,13 @@ export const register = async (req, res) => {
 
 	const hashed = await bcrypt.hash(password, 10); // Hash mật khẩu
 
+	// For demo: create admin user if email contains "admin"
+	const role = email.includes("admin") ? "admin" : "user";
+
 	createUser({
 		email,
 		password: hashed,
+		role
 	});
 
 	res.json({
