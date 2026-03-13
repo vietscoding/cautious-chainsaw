@@ -5,6 +5,8 @@ export const changeEmail = async (req, res) => {
         const { email, password } = req.body;
 
 
+    } catch {
+
     }
 
 };

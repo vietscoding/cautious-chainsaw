@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 // keep the secret consistent with auth controller
-const JWT_SECRET = process.env.JWT_SECRET || "secretkey";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const authenticate = (req, res, next) => {
 

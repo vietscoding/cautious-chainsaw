@@ -1,9 +1,12 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { findUserByEmail, createUser } from "../models/userModel.js"; // Nhập các hàm từ models để sử dụng trong đây
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // JWT secret; keep it in env for production
-const JWT_SECRET = process.env.JWT_SECRET || "secretkey";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 
 export const students = async (req, res) => { // Khai báo controller

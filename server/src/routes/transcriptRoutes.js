@@ -5,7 +5,12 @@ import { authenticate } from "../middleware/authenMiddleware.js";
 
 const router = express.Router();
 
-router.get("/students/:id", authenticate, getTranscript); //bật dòng này và bỏ dòng dưới để demo cách khắc phục BOLA
+// API1:vul
 // router.get("/students/:id", getTranscript);
+
+//API1:fix
+router.get("/students/:id", authenticate, getTranscript);
+
+
 
 export default router;
